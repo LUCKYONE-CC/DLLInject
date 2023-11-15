@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="CommandCenter">
+      <HintPath>..\CommandCenter\bin\Release\net6.0\publish\CommandCenter.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

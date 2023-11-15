@@ -1,5 +1,7 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using System;
+using System.Diagnostics;
+using CommandCenter;
+using CommandCenter.Extensions;
 
 namespace DLLInject
 {
@@ -9,10 +11,10 @@ namespace DLLInject
         {
             try
             {
-                CommandProcessor commandProcessor = new CommandProcessor();
+                var commandProcessor = new CommandHandler();
 
                 commandProcessor.AddCommand(new CommandBuilder("exit")
-                    .SetDescription("Anwendung beenden")
+                    .SetDescription("Exit the application")
                     .SetAction(parameters =>
                     {
                         Environment.Exit(0);
@@ -20,18 +22,18 @@ namespace DLLInject
                     .Build());
 
                 commandProcessor.AddCommand(new CommandBuilder("getallprocesses")
-                    .SetDescription("Liste aller Prozesse anzeigen")
+                    .SetDescription("Display a list of all processes")
                     .SetAction(parameters =>
                     {
-                        Console.WriteLine("Liste aller Prozesse:");
+                        Console.WriteLine("List of all processes:");
                         Process.GetProcesses().ToList().ForEach(p => Console.WriteLine($"Process Name: {p.ProcessName} | PID: {p.Id}"));
                     })
                     .Build());
 
                 commandProcessor.AddCommand(new CommandBuilder("inject")
-                    .SetDescription("DLL in einen Prozess injizieren")
-                    .WithParameter("pid", "Prozess-ID")
-                    .WithParameter("dllpath", "Pfad zur DLL")
+                    .SetDescription("Inject a DLL into a process")
+                    .WithParameter("pid", "Process ID")
+                    .WithParameter("dllpath", "Path to the DLL")
                     .SetAction(parameters =>
                     {
                         string pid = parameters.GetParameterValue("pid");
@@ -43,12 +45,12 @@ namespace DLLInject
                         }
                         else
                         {
-                            Console.WriteLine("Fehlende Parameter für den Befehl 'inject'. Verwenden Sie -pid und -dllPath.");
+                            Console.WriteLine("Missing parameters for the 'inject' command. Use -pid and -dllPath.");
                         }
                     })
                     .Build());
 
-                Console.WriteLine("Geben Sie einen Befehl ein (help für Befehlsliste): \n", ConsoleColor.Blue);
+                Console.WriteLine("Enter a command (type 'help' for a list of commands): \n", ConsoleColor.Blue);
 
                 while (true)
                 {
