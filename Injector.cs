@@ -88,7 +88,6 @@ namespace DLLInject
                 Console.WriteLine("Target process opened successfully.");
 
                 IntPtr remoteThreadStart = GetProcAddress(GetModuleHandle("kernel32"), "LoadLibraryA");
-                //string dllPath = "C:\\Users\\t.schmitz\\Desktop\\Test-DLL-master\\x64\\Debug\\Test-DLL.dll";
 
                 IntPtr remoteMemory = VirtualAllocEx(hProcess, IntPtr.Zero, (uint)(dllPath.Length + 1), AllocationType.Commit, MemoryProtection.ReadWrite);
 
