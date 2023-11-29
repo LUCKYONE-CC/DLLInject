@@ -120,7 +120,6 @@ namespace DLLInject
 
                 WaitForSingleObject(hThread, 0xFFFFFFFF);
 
-                // Freigabe des allozierten Speichers im lokalen Prozess
                 VirtualFree(remoteMemory, 0, AllocationType.Release);
 
                 Console.WriteLine("Remote thread execution completed successfully.");
